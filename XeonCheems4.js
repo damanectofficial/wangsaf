@@ -224,7 +224,7 @@ module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
         const pushname = m.pushName || "No Name"
         const botNumber = await XeonBotInc.decodeJid(XeonBotInc.user.id)
         const isCreator = [botNumber, ...global.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
-        const itsMe = m.sender == botNumber ? true : true
+        const itsMe = m.sender == botNumber ? true : false
         const text = q = args.join(" ")
         const quoted = m.quoted ? m.quoted : m
         const mime = (quoted.msg || quoted).mimetype || ''
@@ -240,27 +240,27 @@ module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
         const participants = m.isGroup ? await groupMetadata.participants : ''
         const groupAdmins = m.isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
         const groupOwner = m.isGroup ? groupMetadata.owner : ''
-    	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : true
-    	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : true
-    	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || true
-        const AntiLink = m.isGroup ? ntilink.includes(from) : true
-const AntiLinkYoutubeVid = m.isGroup ? ntilinkytvid.includes(from) : true
-const AntiLinkYoutubeChannel = m.isGroup ? ntilinkytch.includes(from) : true
-const AntiLinkInstagram = m.isGroup ? ntilinkig.includes(from) : true
-const AntiLinkFacebook = m.isGroup ? ntilinkfb.includes(from) : true
-const AntiLinkTiktok = m.isGroup ? ntilinktt.includes(from) : true
-const AntiLinkTelegram = m.isGroup ? ntilinktg.includes(from) : true
-const AntiLinkTwitter = m.isGroup ? ntilinktwt.includes(from) : true
-const AntiLinkAll = m.isGroup ? ntilinkall.includes(from) : true
-const antiWame = m.isGroup ? ntwame.includes(from) : true
-const antiToxic = m.isGroup ? nttoxic.includes(from) : true
-const antiVirtex = m.isGroup ? ntvirtex.includes(from) : true
-const AntiNsfw = m.isGroup ? ntnsfw.includes(from) : true
+    	const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
+    	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
+    	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
+        const AntiLink = m.isGroup ? ntilink.includes(from) : false
+const AntiLinkYoutubeVid = m.isGroup ? ntilinkytvid.includes(from) : false
+const AntiLinkYoutubeChannel = m.isGroup ? ntilinkytch.includes(from) : false
+const AntiLinkInstagram = m.isGroup ? ntilinkig.includes(from) : false
+const AntiLinkFacebook = m.isGroup ? ntilinkfb.includes(from) : false
+const AntiLinkTiktok = m.isGroup ? ntilinktt.includes(from) : false
+const AntiLinkTelegram = m.isGroup ? ntilinktg.includes(from) : false
+const AntiLinkTwitter = m.isGroup ? ntilinktwt.includes(from) : false
+const AntiLinkAll = m.isGroup ? ntilinkall.includes(from) : false
+const antiWame = m.isGroup ? ntwame.includes(from) : false
+const antiToxic = m.isGroup ? nttoxic.includes(from) : false
+const antiVirtex = m.isGroup ? ntvirtex.includes(from) : false
+const AntiNsfw = m.isGroup ? ntnsfw.includes(from) : false
 const isAutoStick = _autostick.includes(from)
-const isAutoSticker = m.isGroup ? autosticker.includes(from) : true
+const isAutoSticker = m.isGroup ? autosticker.includes(from) : false
 const Autoreply = m.isGroup ? autorep.includes(from) : true
         const isBan = banUser.includes(m.sender)
-        const isBanChat = m.isGroup ? banchat.includes(from) : true
+        const isBanChat = m.isGroup ? banchat.includes(from) : false
 autoreadsw = true
 	    
         //member\\
@@ -285,28 +285,28 @@ autoreadsw = true
             let chats = global.db.data.chats[m.chat]
             if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
             if (chats) {
-                if (!('mute' in chats)) chats.mute = true
+                if (!('mute' in chats)) chats.mute = false
             } else global.db.data.chats[m.chat] = {
-                mute: true,
+                mute: false,
             }
 		
 	    let setting = global.db.data.settings[botNumber]
             if (typeof setting !== 'object') global.db.data.settings[botNumber] = {}
 	    if (setting) {
 		if (!isNumber(setting.status)) setting.status = 0
-		if (!('autobio' in setting)) setting.autobio = true
-if (!('templateImage' in setting)) setting.templateImage = true
-if (!('templateVideo' in setting)) setting.templateVideo = true
-		if (!('templateGif' in setting)) setting.templateGif = true
-		if (!('templateMsg' in setting)) setting.templateMsg = true
+		if (!('autobio' in setting)) setting.autobio = false
+if (!('templateImage' in setting)) setting.templateImage = false
+if (!('templateVideo' in setting)) setting.templateVideo = false
+		if (!('templateGif' in setting)) setting.templateGif = false
+		if (!('templateMsg' in setting)) setting.templateMsg = false
 		if (!('templateDocument' in setting)) setting.templateDocument = true
 	    } else global.db.data.settings[botNumber] = {
 		status: 0,
-		autobio: true,
-		templateImage: true,
-		templateVideo: true,
-		templateGif: true,
-		templateMsg: true,
+		autobio: false,
+		templateImage: false,
+		templateVideo: false,
+		templateGif: false,
+		templateMsg: false,
 		templateDocument: true,
 	    }
 	    
@@ -324,7 +324,7 @@ const fkontak = { key: {participant: `0@s.whatsapp.net`, ...(from ? { remoteJid:
 //FAKEREPLY PRODUCT
 const ftoko = {
 key: {
-fromMe: true,
+fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})
 },
 message: {
@@ -390,7 +390,7 @@ jpegThumbnail: log0
 //FAKEREPLY VIDEO
 const fvideo = {
 key: { 
-fromMe: true,
+fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ? 
 { remoteJid: "916909137213-1613049930@g.us" } : {}) 
 },
@@ -407,7 +407,7 @@ message: {
 //FAKEREPLY GROUPINVITE
 const fgclink = {
 "key": {
-"fromMe": true,
+"fromMe": false,
 "participant": "0@s.whatsapp.net",
 "remoteJid": "0@s.whatsapp.net"
 },
@@ -424,7 +424,7 @@ const fgclink = {
 //FAKEREPLY GIF
 const fgif = {
 key: { 
-fromMe: true,
+fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ? 
 { remoteJid: "916909137213-1613049930@g.us" } : {}) 
 },
@@ -442,7 +442,7 @@ message: {
 //FAKEREPLY TEXT WITH THUMBNAIL
 const ftextt = {
 key: { 
-fromMe: true,
+fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ? 
 { remoteJid: "916909137213-1613049930@g.us" } : {}) 
 },
@@ -457,7 +457,7 @@ message: {
 //FAKEREPLY VN
 const fvn = {
 key: { 
-fromMe: true,
+fromMe: false,
 participant: `0@s.whatsapp.net`, ...(from ? 
 { remoteJid: "916909137213-1613049930@g.us" } : {}) 
 },
@@ -840,7 +840,7 @@ reply("Emoji error, please enter another emoji\nNOTE : Just enter 1 emoji")
 Answer The Following Questions :\n${room.soal}\n\n\nThere Is ${room.jawaban.length} Answer ${room.jawaban.find(v => v.includes(' ')) ? `(Some Answers Have Spaces)` : ''}
 ${isWin ? `All Answers Answered` : isSurender ? 'Surrender!' : ''}
 ${Array.from(room.jawaban, (jawaban, index) => {
-        return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : true
+        return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
     }).filter(v => v).join('\n')}
     ${isSurender ? '' : `Perfect Player`}`.trim()
             XeonBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
@@ -991,7 +991,7 @@ Typed *surrender* to surrender and admited defeat`
 	    let roof = Object.values(this.suit).find(roof => roof.id && roof.status && [roof.p, roof.p2].includes(m.sender))
 	    if (roof) {
 	    let win = ''
-	    let tie = true
+	    let tie = false
 	    if (m.sender == roof.p2 && /^(acc(ept)?|accept|yes|okay?|reject|no|later|nope(k.)?yes|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
 	    if (/^(reject|no|later|n|nope(k.)?yes)/i.test(m.text)) {
 	    XeonBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} Refuse Suit, Suit Canceled`, m)
@@ -1677,11 +1677,11 @@ if (isBanChat) return reply(mess.banChat)
                 } else if (args[0] === 'archive') {
                     XeonBotInc.chatModify({  archive: true }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 } else if (args[0] === 'unarchive') {
-                    XeonBotInc.chatModify({ archive: true }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
+                    XeonBotInc.chatModify({ archive: false }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 } else if (args[0] === 'read') {
                     XeonBotInc.chatModify({ markRead: true }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 } else if (args[0] === 'unread') {
-                    XeonBotInc.chatModify({ markRead: true }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
+                    XeonBotInc.chatModify({ markRead: false }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 } else if (args[0] === 'delete') {
                     XeonBotInc.chatModify({ clear: { message: { id: m.quoted.id, fromMe: true }} }, m.chat, []).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 }
@@ -1692,7 +1692,7 @@ if (isBanChat) return reply(mess.banChat)
 if (isBanChat) return reply(mess.banChat)
                 if ('family100'+m.chat in _family100) {
                     reply('There Are Still Unfinished Sessions!')
-                    reply(true)
+                    reply(false)
                 }
                 let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/family100.json')
                 let random = anu[Math.floor(Math.random() * anu.length)]
@@ -1701,7 +1701,7 @@ if (isBanChat) return reply(mess.banChat)
                     id: 'family100'+m.chat,
                     pesan: await XeonBotInc.sendText(m.chat, hasil, m),
                     ...random,
-                    terjawab: Array.from(random.jawaban, () => true),
+                    terjawab: Array.from(random.jawaban, () => false),
                     hadiah: 6,
                 }
             }
@@ -3116,7 +3116,7 @@ if (isBanChat) return reply(mess.banChat)
                 reply(`${XeonBotInc.user.name} Has Been Muted In This Group !`)
                 } else if (args[0] === "off") {
                 if (!db.data.chats[m.chat].mute) return reply(`Previously Inactive`)
-                db.data.chats[m.chat].mute = true
+                db.data.chats[m.chat].mute = false
                 reply(`${XeonBotInc.user.name} Has Been Unmuted In This Group!`)
                 } else {
                  let buttons = [
@@ -3157,7 +3157,7 @@ if (isBanChat) return reply(mess.banChat)
                 if (args[0] === 'enable') {
                     await XeonBotInc.sendMessage(m.chat, { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL }).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 } else if (args[0] === 'disable') {
-                    await XeonBotInc.sendMessage(m.chat, { disappearingMessagesInChat: true }).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
+                    await XeonBotInc.sendMessage(m.chat, { disappearingMessagesInChat: false }).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
                 }
             }
             break
@@ -3205,7 +3205,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'delete': case 'del': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-                if (!m.quoted) reply(true)
+                if (!m.quoted) reply(false)
                 let { chat, fromMe, id, isBaileys } = m.quoted
                 if (!isBaileys) return replay(`The Message Was Not Sent By A Bot!`)
                 XeonBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
@@ -3301,7 +3301,7 @@ if (isBanChat) return reply(mess.banChat)
 if (!isCreator) return replay(mess.owner)
                 if (!/video/.test(mime) && !/image/.test(mime) && !/audio/.test(mime)) return reply(`*Send/Reply Video/Audio/Image You Want to Broadcast With Caption* ${prefix + command}`)
                 let anu = await store.chats.all().map(v => v.id)
-                let ftroli ={key: {fromMe: true,"participant":"0@s.whatsapp.net", "remoteJid": "916909137213-1604595598@g.us"}, "message": {orderMessage: {itemCount: 999999999,status: 200, thumbnail: fs.readFileSync('./XeonMedia/theme/cheemspic.jpg'), surface: 200, message: `${ownername}'s Broadcast`, orderTitle: `${botname}`, sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
+                let ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "916909137213-1604595598@g.us"}, "message": {orderMessage: {itemCount: 999999999,status: 200, thumbnail: fs.readFileSync('./XeonMedia/theme/cheemspic.jpg'), surface: 200, message: `${ownername}'s Broadcast`, orderTitle: `${botname}`, sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
                 reply(`*Send Broadcast To* ${anu.length} *Group Chat, Time ${anu.length * 1.5} secs*`)
                 for (let i of anu) {
                     await sleep(1500)
@@ -3411,7 +3411,7 @@ let teks = `     「 Group Chat 」\n\nThere are ${anu.length} users using bot i
 for (let i of anu) {
  let metadata = await XeonBotInc.groupMetadata(i)
  if (metadata.owner === "undefined") {
- loldd = true
+ loldd = false
  } else {
  loldd = metadata.owner
  }
@@ -7636,7 +7636,7 @@ break
 	if (isBanChat) return reply(mess.banChat)
                 if (!Number(text)) return reply(`Example : ${prefix + command} 916909137213`)
                 let anu = await primbon.nomer_hoki(Number(text))
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Phone Number :* ${anu.message.nomer_hp}\n${themeemoji} *Shuzi Angka Figures :* ${anu.message.angka_shuzi}\n${themeemoji} *Positive Energy :*\n- Riches : ${anu.message.energi_positif.kekayaan}\n- Health : ${anu.message.energi_positif.kesehatan}\n- Love : ${anu.message.energi_positif.cinta}\n- Stability : ${anu.message.energi_positif.kestabilan}\n- Percentage : ${anu.message.energi_positif.persentase}\n${themeemoji} *Negative Energy :*\n- Dispute : ${anu.message.energi_negatif.perselisihan}\n- Lost : ${anu.message.energi_negatif.kehilangan}\n- Catastrophe : ${anu.message.energi_negatif.malapetaka}\n- Destruction : ${anu.message.energi_negatif.kehancuran}\n- Percentage : ${anu.message.energi_negatif.persentase}`, m)
             }
             break
@@ -7645,7 +7645,7 @@ break
 	if (isBanChat) return reply(mess.banChat)
                 if (!text) return reply(`Example : ${prefix + command} belanja`)
                 let anu = await primbon.tafsir_mimpi(text)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Dream :* ${anu.message.mimpi}\n${themeemoji} *Meaning :* ${anu.message.arti}\n${themeemoji} *Solution :* ${anu.message.solusi}`, m)
             }
             break
@@ -7655,7 +7655,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005, Novia, 16, 11, 2004`)
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_jodoh(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Your Name :* ${anu.message.nama_anda.nama}\n${themeemoji} *Your Birth :* ${anu.message.nama_anda.tgl_lahir}\n${themeemoji} *Couple Name :* ${anu.message.nama_pasangan.nama}\n${themeemoji} *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7665,7 +7665,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005, Novia, 16, 11, 2004`)
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_jodoh_bali(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Your Name :* ${anu.message.nama_anda.nama}\n${themeemoji} *Your Birth :* ${anu.message.nama_anda.tgl_lahir}\n${themeemoji} *Couple Name :* ${anu.message.nama_pasangan.nama}\n${themeemoji} *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7675,7 +7675,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005, Novia, 16, 11, 2004`)
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.suami_istri(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Husband's Name :* ${anu.message.suami.nama}\n${themeemoji} *Husband Born :* ${anu.message.suami.tgl_lahir}\n${themeemoji} *Wife's Name :* ${anu.message.istri.nama}\n${themeemoji} *Born Wife :* ${anu.message.istri.tgl_lahir}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7685,7 +7685,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005, Novia, 16, 11, 2004`)
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_cinta(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Your Name :* ${anu.message.nama_anda.nama}\n${themeemoji} *Your Birth :* ${anu.message.nama_anda.tgl_lahir}\n${themeemoji} *Couple Name :* ${anu.message.nama_pasangan.nama}\n${themeemoji} *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n${themeemoji} *Positive Side :* ${anu.message.sisi_positif}\n${themeemoji} *Negative Side :* ${anu.message.sisi_negatif}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7694,7 +7694,7 @@ break
 	if (isBanChat) return reply(mess.banChat)
                 if (!text) return reply(`Example : ${prefix + command} Dika Ardianta`)
                 let anu = await primbon.arti_nama(text)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Meaning :* ${anu.message.arti}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7704,7 +7704,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005`)
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.kecocokan_nama(nama, tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Life Path :* ${anu.message.life_path}\n${themeemoji} *Destiny :* ${anu.message.destiny}\n${themeemoji} *Destiny Desire :* ${anu.message.destiny_desire}\n${themeemoji} *Personality :* ${anu.message.personality}\n${themeemoji} *Percentage :* ${anu.message.persentase_kecocokan}`, m)
             }
             break
@@ -7714,7 +7714,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika|Novia`)
                 let [nama1, nama2] = text.split`|`
                 let anu = await primbon.kecocokan_nama_pasangan(nama1, nama2)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendImage(m.chat,  anu.message.gambar, `${themeemoji} *Your Name :* ${anu.message.nama_anda}\n${themeemoji} *Couple Name :* ${anu.message.nama_pasangan}\n${themeemoji} *Positive Side :* ${anu.message.sisi_positif}\n${themeemoji} *Negative Side :* ${anu.message.sisi_negatif}`, m)
             }
             break
@@ -7724,7 +7724,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 6, 12, 2020`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.tanggal_jadian_pernikahan(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Wedding Date :* ${anu.message.tanggal}\n${themeemoji} *Characteristics :* ${anu.message.karakteristik}`, m)
             }
             break
@@ -7734,7 +7734,7 @@ break
                 if (!text) return reply(`Example : ${prefix+ command} 28, 12, 2021`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.sifat_usaha_bisnis(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Born :* ${anu.message.hari_lahir}\n${themeemoji} *Business :* ${anu.message.usaha}`, m)
             }
             break
@@ -7744,7 +7744,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.rejeki_hoki_weton(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Born :* ${anu.message.hari_lahir}\n${themeemoji} *Sustenance :* ${anu.message.rejeki}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7754,7 +7754,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.pekerjaan_weton_lahir(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Born :* ${anu.message.hari_lahir}\n?? *Profession :* ${anu.message.pekerjaan}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7764,7 +7764,7 @@ break
                 if (!text) return reply(`Example : 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.ramalan_nasib(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Analysis :* ${anu.message.analisa}\n${themeemoji} *Root Number :* ${anu.message.angka_akar}\n${themeemoji} *Nature :* ${anu.message.sifat}\n${themeemoji} *Element :* ${anu.message.elemen}\n${themeemoji} *Lucky Numbers :* ${anu.message.angka_keberuntungan}`, m)
             }
             break
@@ -7774,7 +7774,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.cek_potensi_penyakit(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Analysis :* ${anu.message.analisa}\n${themeemoji} *Sector :* ${anu.message.sektor}\n?? *Element :* ${anu.message.elemen}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7784,7 +7784,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.arti_kartu_tarot(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendImage(m.chat, anu.message.image, `${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Tarot Symbol :* ${anu.message.simbol_tarot}\n${themeemoji} *Meaning :* ${anu.message.arti}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7794,7 +7794,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 1, 2005\n\nNote : ${prefix + command} Name, gender, tahun lahir\nGender : 1 untuk laki-laki & 2 untuk perempuan`)
                 let [nama, gender, tahun] = text.split`,`
                 let anu = await primbon.perhitungan_feng_shui(nama, gender, tahun)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Born :* ${anu.message.tahun_lahir}\n${themeemoji} *Gender :* ${anu.message.jenis_kelamin}\n${themeemoji} *Kua Number :* ${anu.message.angka_kua}\n${themeemoji} *Group :* ${anu.message.kelompok}\n${themeemoji} *Character :* ${anu.message.karakter}\n${themeemoji} *Good Sector :* ${anu.message.sektor_baik}\n${themeemoji} *Bad Sector :* ${anu.message.sektor_buruk}`, m)
             }
             break
@@ -7804,7 +7804,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.petung_hari_baik(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *When Challenged :* ${anu.message.kala_tinantang}\n${themeemoji} *Info :* ${anu.message.info}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7814,7 +7814,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.hari_sangar_taliwangke(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Info :* ${anu.message.info}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7822,7 +7822,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_hari_naas(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Day Of Birth :* ${anu.message.hari_lahir}\n${themeemoji} *Date Of Birth :* ${anu.message.tgl_lahir}\n${themeemoji} *Fateful Day :* ${anu.message.hari_naas}\n${themeemoji} *Info :* ${anu.message.catatan}\n${themeemoji} *Notes :* ${anu.message.info}`, m)
             }
             break
@@ -7832,7 +7832,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.rahasia_naga_hari(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Day Of Birth :* ${anu.message.hari_lahir}\n${themeemoji} *Date Of Birth :* ${anu.message.tgl_lahir}\n${themeemoji} *Dragon Day Direction :* ${anu.message.arah_naga_hari}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7842,7 +7842,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_arah_rejeki(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Day Of Birth :* ${anu.message.hari_lahir}\n${themeemoji} *Date Of Birth :* ${anu.message.tgl_lahir}\n${themeemoji} *Sustenance Direction :* ${anu.message.arah_rejeki}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7852,7 +7852,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} DIka, 7, 7, 2005, 2022\n\nNote : ${prefix + command} Name, tanggal lahir, bulan lahir, tahun lahir, untuk tahun`)
                 let [nama, tgl, bln, thn, untuk] = text.split`,`
                 let anu = await primbon.ramalan_peruntungan(nama, tgl, bln, thn, untuk)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Fortune Of The Year :* ${anu.message.peruntungan_tahun}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7862,7 +7862,7 @@ break
                 if (!text) return (`Example : ${prefix + command} 7, 7, 2005`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.weton_jawa(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Date :* ${anu.message.tanggal}\n${themeemoji} *Number Of Neptune :* ${anu.message.jumlah_neptu}\n${themeemoji} *Day Character :* ${anu.message.watak_hari}\n${themeemoji} *Dragon Day :* ${anu.message.naga_hari}\n${themeemoji} *Good Hour :* ${anu.message.jam_baik}\n${themeemoji} *Birth Character :* ${anu.message.watak_kelahiran}`, m)
             }
             break
@@ -7872,7 +7872,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005`)
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.sifat_karakter_tanggal_lahir(nama, tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Lifeline :* ${anu.message.garis_hidup}`, m)
             }
             break
@@ -7882,7 +7882,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} Dika, 7, 7, 2005`)
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.potensi_keberuntungan(nama, tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Name :* ${anu.message.nama}\n${themeemoji} *Born :* ${anu.message.tgl_lahir}\n${themeemoji} *Results :* ${anu.message.result}`, m)
             }
             break
@@ -7892,7 +7892,7 @@ break
                 if (!text) return reply(`Example : ${prefix + command} 12, 1, 2022`)
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_memancing_ikan(tgl, bln, thn)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Date :* ${anu.message.tgl_memancing}\n${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7902,7 +7902,7 @@ break
                 if (!text) return (`Example : ${prefix + command} 12, 1, 2022, 28\n\nNote : ${prefix + command} First Day Of Menstruation Cycle`)
                 let [tgl, bln, thn, siklus] = text.split`,`
                 let anu = await primbon.masa_subur(tgl, bln, thn, siklus)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Results :* ${anu.message.result}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7939,7 +7939,7 @@ break
                 let zodiac = await getZodiac(birth[1], birth[2])
                 
                 let anu = await primbon.zodiak(zodiac)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Zodiac :* ${anu.message.zodiak}\n${themeemoji} *Number :* ${anu.message.nomor_keberuntungan}\n${themeemoji} *Aroma :* ${anu.message.aroma_keberuntungan}\n${themeemoji} *Planet :* ${anu.message.planet_yang_mengitari}\n${themeemoji} *Flower :* ${anu.message.bunga_keberuntungan}\n${themeemoji} *Color :* ${anu.message.warna_keberuntungan}\n${themeemoji} *Stone :* ${anu.message.batu_keberuntungan}\n${themeemoji} *Element :* ${anu.message.elemen_keberuntungan}\n${themeemoji} *Zodiac Couple :* ${anu.message.pasangan_zodiak}\n${themeemoji} *Notes :* ${anu.message.catatan}`, m)
             }
             break
@@ -7948,7 +7948,7 @@ break
 	if (isBanChat) return reply(mess.banChat)
                 if (!text) return reply(`Example : ${prefix + command} tikus\n\nNote : For Detail https://primbon.com/shio.htm`)
                 let anu = await primbon.shio(text)
-                if (anu.status == true) return reply(anu.message)
+                if (anu.status == false) return reply(anu.message)
                 XeonBotInc.sendText(m.chat, `${themeemoji} *Results :* ${anu.message}`, m)
             }
             break
@@ -8349,7 +8349,7 @@ break
                     mentionedJid: m.mentionedJid,
                     creator: m.sender,
                     at: + new Date,
-                    locked: true,
+                    locked: false,
                 }
                 reply(`Done!`)
             }
@@ -8456,7 +8456,7 @@ View List Of Messages With ${prefix}listmsg`)
                         { buttonId: 'start', buttonText: { displayText: '🚶Start🚶' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You Are Not In An Anonymous Session, Press The Button To Find A Partner \`\`\``)
-                   reply(true)
+                   reply(false)
                 }
                 reply('Ok')
                 let other = room.other(m.sender)
@@ -8474,7 +8474,7 @@ View List Of Messages With ${prefix}listmsg`)
                         { buttonId: 'keluar', buttonText: { displayText: '🛑Stop🛑' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You Are Still In An Anonymous Session, Press The Button Below To Terminate Your Anonymous Session\`\`\``, XeonBotInc.user.name, m)
-                    reply(true)
+                    reply(false)
                 }
                 let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
                 if (room) {
@@ -8518,7 +8518,7 @@ View List Of Messages With ${prefix}listmsg`)
                         { buttonId: 'start', buttonText: { displayText: '🚶Start🚶' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You Are Not In An Anonymous Session, Press The Button To Find A Partner\`\`\``)
-                    reply(true)
+                    reply(false)
                 }
                 let other = romeo.other(m.sender)
                 if (other) await XeonBotInc.sendText(other, `\`\`\`Partner Has Left Anonymous Session\`\`\``, m)
@@ -8566,7 +8566,7 @@ View List Of Messages With ${prefix}listmsg`)
             	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
                 if (!isCreator) return replay(`${mess.owner}`)
-                XeonBotInc.public = true
+                XeonBotInc.public = false
                 reply('Successful Change To Self Usage')
             }
             break
@@ -8588,8 +8588,8 @@ if (antitags === true) return
 global.antitags = true
 replay(`Successfully activated antitag!`)
 } else if (args[0] === 'off') {
-if (antitags === true) return
-global.antitags = true
+if (antitags === false) return
+global.antitags = false
 replay(`Successfully deactivated antitag!`)
 } else {
 replay('Choose on or off')
@@ -8675,37 +8675,37 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             let setbot = db.data.settings[botNumber]
                if (args[0] === 'templateImage'){
                 setbot.templateImage = true
-                setbot.templateVideo = true
-                setbot.templateGif = true
-                setbot.templateMsg = true
-                setbot.templateDocument = true
+                setbot.templateVideo = false
+                setbot.templateGif = false
+                setbot.templateMsg = false
+                setbot.templateDocument = false
                 reply(mess.success)
                 } else if (args[0] === 'templateVideo'){
-                setbot.templateImage = true
+                setbot.templateImage = false
                 setbot.templateVideo = true
-                setbot.templateGif = true
-                setbot.templateMsg = true
-                setbot.templateLocation = true
+                setbot.templateGif = false
+                setbot.templateMsg = false
+                setbot.templateLocation = false
                 reply(mess.success)
                 } else if (args[0] === 'templateGif'){
-                setbot.templateImage = true
-                setbot.templateVideo = true
+                setbot.templateImage = false
+                setbot.templateVideo = false
                 setbot.templateGif = true
-                setbot.templateMsg = true
-                setbot.templateDocument = true
+                setbot.templateMsg = false
+                setbot.templateDocument = false
                 reply(mess.success)
                 //} else if (args[0] === 'templateMessage'){
-                /////setbot.templateImage = true
-                /////setbot.templateVideo = true
-                /////setbot.templateGif = true
+                /////setbot.templateImage = false
+                /////setbot.templateVideo = false
+                /////setbot.templateGif = false
                 /////setbot.templateMsg = true
-                //////setbot.templateDocument = true
+                //////setbot.templateDocument = false
                 //////reply(mess.success)
                 } else if (args[0] === 'templateDocument'){
-                setbot.templateImage = true
-                setbot.templateVideo = true
-                setbot.templateGif = true
-                setbot.templateMsg = true
+                setbot.templateImage = false
+                setbot.templateVideo = false
+                setbot.templateGif = false
+                setbot.templateMsg = false
                 setbot.templateDocument = true
                 reply(mess.success)
                 } else {
@@ -10587,8 +10587,6 @@ case 'tqtt':
 	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
 reply(`Thanks to
-LORD BUDDHA
-Xeon (Me)
 My family
 And all friends who helped assemble this sexy script !!!`)
 break
@@ -10652,7 +10650,7 @@ const listTag = [`${global.ownertag}@s.whatsapp.net`]
 const partiNum = (m.mtype === 'extendedTextMessage') ? m.message.extendedTextMessage.contextInfo.participant : ''
 //anti-tag 2
 if (listTag.includes(partiNum)) {
-if (antitags === true) return
+if (antitags === false) return
 if (!m.isGroup) return
 if (m.key.fromMe) return
 sendNye = fs.readFileSync('./XeonMedia/theme/yourtag.webp')
@@ -10661,7 +10659,7 @@ XeonBotInc.sendMessage(from, {sticker:sendNye, contextInfo:{forwardingScore: 800
 }
 //anti-tag 3
 if (budy.includes(`${global.ownertag}`)) {
-if (antitags === true) return
+if (antitags === false) return
 if (!m.isGroup) return
 if (m.key.fromMe) return
 sendNye = fs.readFileSync('./XeonMedia/theme/yourtag.webp')
