@@ -56,17 +56,17 @@ global.doc6 = 'application/vnd.android.package-archive'
 //owmner v card
 global.vcardowner = ['6283872273467'] //ur owner number
 global.ownername = "🦄Hidayat Store My Id" //ur owner name
-global.ytname = "YT: Xeon" //ur yt chanel name
-global.socialm = "GitHub: DGXeon" //ur github or insta name
+global.ytname = "YT:" //ur yt chanel name
+global.socialm = "GitHub:" //ur github or insta name
 global.location = "India, Mizoram, Aizawl" //ur location
 
 //bot bomdy 
 global.owner = ['6283872273467']
 global.ownertag = '6283872273467' //ur tag number
 global.botname = 'Hi DayatGanteng-BotWhatsap' //ur bot name
-global.linkz = "https://youtu.be/WiIqCdiDjFo" //your theme url which will be displayed on whatsapp
-global.websitex = "https://youtu.be/WiIqCdiDjFo" //ur website to be displayed
-global.botscript = 'https://github.com/DGXeon/CheemsBot-MD4' //script link
+global.linkz = "https://hidayat-store.my.id" //your theme url which will be displayed on whatsapp
+global.websitex = "https://hidayat-store.my.id" //ur website to be displayed
+global.botscript = 'https://hidayat-store.my.id' //script link
 global.themeemoji = "🦄" //ur theme emoji
 global.packname = "Hi DayatGanteng-BotWhatsap" //ur sticker watermark packname
 global.author = "🦄Hidayat Store My Id" //ur sticker watermark author
